@@ -7,7 +7,7 @@ namespace DevagramCSharp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : BaseController
     {
         public readonly ILogger<UsuarioController> _logger;
 
