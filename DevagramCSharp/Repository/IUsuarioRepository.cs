@@ -4,8 +4,8 @@ namespace DevagramCSharp.Repository
 {
     public interface IUsuarioRepository
     {
-        public void Salvar(Usuario usuario);
-
         public bool VerificarEmail(string email);
+        public void Salvar(Usuario usuario);
+        public Usuario GetUsuarioLoginSenha(string email, string senha);
     }
 }

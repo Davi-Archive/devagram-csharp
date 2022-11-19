@@ -1,6 +1,8 @@
 ﻿using DevagramCSharp.Dtos;
 using DevagramCSharp.Models;
+using DevagramCSharp.Repository;
 using DevagramCSharp.Services;
+using DevagramCSharp.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,7 @@ namespace DevagramCSharp.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILogger<LoginController> _logger;
+        private readonly IUsuarioRepository _usuarioRepository;
 
         public LoginController(ILogger<LoginController> logger)
         {
@@ -28,26 +31,16 @@ namespace DevagramCSharp.Controllers
                     !String.IsNullOrWhiteSpace(loginrequisicao.Senha) &&
                     !String.IsNullOrWhiteSpace(loginrequisicao.Email))
                 {
-                    string email = "daniel@devaria.com.br";
-                    string senha = "Senha0123";
 
-                    if (loginrequisicao.Email == email && loginrequisicao.Senha == senha)
+                    Usuario usuario = _usuarioRepository.GetUsuarioLoginSenha(loginrequisicao.Email.ToLower(), MD5Utils.gerarHashMD5(loginrequisicao.Senha));
+
+                    if (usuario != null)
                     {
-
-
-                        Usuario usuario = new Usuario()
-                        {
-                            Email = loginrequisicao.Email,
-                            Id = 12,
-                            Nome = "Daniel Castello"
-                        };
-
-
 
                         return Ok(new LoginRespostaDto()
                         {
-                            Email = email,
-                            Nome = "Davi",
+                            Email = usuario.Email,
+                            Nome = usuario.Nome,
                             Token = TokenService.CriarToken(usuario)
                         });
                     }
@@ -59,6 +52,8 @@ namespace DevagramCSharp.Controllers
                             Status = StatusCodes.Status400BadRequest
                         });
                     }
+
+
                 }
                 else
                 {
