@@ -1,6 +1,8 @@
 using System.Text;
 using DevagramCSharp;
 using DevagramCSharp.Models;
+using DevagramCSharp.Repository;
+using DevagramCSharp.Repository.Impl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +18,8 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DevagramContext>(option => option.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepositoryImpl>();
 
 var chaveCriptogragia = Encoding.ASCII.GetBytes(ChaveJWT.ChaveSecreta);
 builder.Services.AddAuthentication(auth =>
