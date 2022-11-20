@@ -23,9 +23,12 @@ namespace DevagramCSharp.Services
             };
 
             request.Content = conteudo;
-            var retornoreq = client.PostAsync("https://upload.cosmicjs.com/v2/buckets/instagram-devagrambucket/media")
+            var retornoreq = client.PostAsync("https://upload.cosmicjs.com/v2/buckets/instagram-devagrambucket/media", request.Content).Result;
 
-            return "";
+
+            var urlretorno = retornoreq.Content.ReadFromJsonAsync<CosmicRespostaDto>();
+
+            return urlretorno.Result.media.Url;
         }
     }
 }
