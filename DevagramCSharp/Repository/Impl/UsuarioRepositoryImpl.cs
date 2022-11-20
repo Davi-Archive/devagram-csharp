@@ -11,6 +11,12 @@ namespace DevagramCSharp.Repository.Impl
             _context = context;
         }
 
+        public void AtualizarUsuario(Usuario usuario)
+        {
+            _context.Update(usuario);
+            _context.SaveChanges();
+        }
+
         public Usuario GetUsuarioLoginSenha(string email, string senha)
         {
             return _context.Usuarios.FirstOrDefault(u => u.Email == email && u.Senha == senha);
