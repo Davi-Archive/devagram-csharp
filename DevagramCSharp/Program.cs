@@ -20,6 +20,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DevagramContext>(option => option.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepositoryImpl>();
+builder.Services.AddScoped<ISeguidorRepository, SeguidorRepositoryImpl>();
 
 var chaveCriptogragia = Encoding.ASCII.GetBytes(ChaveJWT.ChaveSecreta);
 builder.Services.AddAuthentication(auth =>
