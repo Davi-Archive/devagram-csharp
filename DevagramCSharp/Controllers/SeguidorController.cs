@@ -49,19 +49,17 @@ namespace DevagramCSharp.Controllers
                         return Ok("Usuario Seguido com sucesso");
                     }
                 }
-
-
-
-
-
-                return Ok();
+                else
+                {
+                    return BadRequest("Ocorreu um erro ao Seguir/Desseguir.");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError("Ocorreu um erro no login: " + ex.Message);
+                _logger.LogError("Ocorreu um erro no seguir: " + ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorRespostaDto()
                 {
-                    Descricao = "Ocorreu um erro ao fazer o login",
+                    Descricao = "Ocorreu um erro ao seguir o usuário.",
                     Status = StatusCodes.Status500InternalServerError
                 });
             }
