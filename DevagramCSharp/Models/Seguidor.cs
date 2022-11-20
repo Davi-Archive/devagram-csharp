@@ -5,7 +5,7 @@ namespace DevagramCSharp.Models
     public class Seguidor
     {
         public int Id { get; set; }
-        public int? IdSeguidor { get; set; }
+        public int? IdUsuarioSeguidor { get; set; }
         public int? IdUsuarioSeguido { get; set; }
 
         [ForeignKey("IdUsuarioSeguidor")]

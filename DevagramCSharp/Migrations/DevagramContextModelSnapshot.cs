@@ -30,13 +30,10 @@ namespace DevagramCSharp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("IdSeguidor")
-                        .HasColumnType("int");
-
                     b.Property<int?>("IdUsuarioSeguido")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUsuarioSeguidor")
+                    b.Property<int?>("IdUsuarioSeguidor")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -85,9 +82,7 @@ namespace DevagramCSharp.Migrations
 
                     b.HasOne("DevagramCSharp.Models.Usuario", "UsuarioSeguidor")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioSeguidor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdUsuarioSeguidor");
 
                     b.Navigation("UsuarioSeguido");
 
