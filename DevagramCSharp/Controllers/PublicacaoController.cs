@@ -12,13 +12,21 @@ namespace DevagramCSharp.Controllers
     {
         private readonly ILogger<PublicacaoController> _logger;
         private readonly IPublicacaoRepository _publicacaoRepository;
+        private readonly IComentarioRepository _comentarioRepository;
+        private readonly ICurtidaRepository _curtidaRepository;
 
-        public PublicacaoController(ILogger<PublicacaoController> logger
+        public PublicacaoController(
+            ILogger<PublicacaoController> logger
             , IPublicacaoRepository publicacaoRepository,
-            IUsuarioRepository usuarioRepository) : base(usuarioRepository)
+            IUsuarioRepository usuarioRepository,
+            IComentarioRepository comentarioRepository,
+            ICurtidaRepository cutidaRepository
+            ) : base(usuarioRepository)
         {
             _logger = logger;
             _publicacaoRepository = publicacaoRepository;
+            _comentarioRepository = comentarioRepository;
+            _curtidaRepository = cutidaRepository;
         }
 
         [HttpPost]
@@ -63,5 +71,45 @@ namespace DevagramCSharp.Controllers
                 });
             }
         }
+        [HttpGet]
+        public IActionResult FeedHome()
+        {
+            try
+            {
+                List<PublicacaoFeedRespostaDto> feed = _publicacaoRepository.GetPublicacaoesFeed(LerToken().Id);
+
+                foreach (PublicacaoFeedRespostaDto feedResposta in feed)
+                {
+                    Usuario usuario = _usuarioRepository.GetUsuarioPorId(feedResposta.IdUsuario);
+                    UsuarioRespostaDto usuarioRespostaDto = new UsuarioRespostaDto()
+                    {
+                        Nome = usuario.Nome,
+                        Avatar = usuario.FotoPerfil,
+                        IdUsuario = usuario.Id
+                    };
+
+                    feedResposta.Usuario = usuarioRespostaDto;
+
+                    List<Comentario> comentarios = _comentarioRepository.GetComentarioPorPublicacao(feedResposta.IdPublicacao);
+                    feedResposta.Comentarios = comentarios;
+
+                    List<Curtida> curtidas = _curtidaRepository.GetCurtidaPorPublicacao(feedResposta.IdPublicacao);
+                    feedResposta.Curtidas = curtidas;
+
+                }
+                return Ok(feed);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("Ocorreu um erro ao carregar o Feed da Home: " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorRespostaDto()
+                {
+                    Descricao = "Ocorreu um erro ao Publicar.",
+                    Status = StatusCodes.Status500InternalServerError
+                });
+            }
+        }
     }
+
 }

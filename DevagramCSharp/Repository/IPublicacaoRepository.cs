@@ -1,4 +1,5 @@
-﻿using DevagramCSharp.Models;
+﻿using DevagramCSharp.Dtos;
+using DevagramCSharp.Models;
 
 namespace DevagramCSharp.Repository
 {
@@ -6,5 +7,6 @@ namespace DevagramCSharp.Repository
     {
         public void Publicar(Publicacao publicacao);
 
+        List<PublicacaoFeedRespostaDto> GetPublicacaoesFeed(int idUsuario);
     }
 }
