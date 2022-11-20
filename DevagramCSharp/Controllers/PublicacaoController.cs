@@ -31,7 +31,8 @@ namespace DevagramCSharp.Controllers
 
                 if (publicacaodto != null)
                 {
-                    if (String.IsNullOrEmpty(publicacaodto.Descricao) && String.IsNullOrWhiteSpace(publicacaodto.Descricao))
+                    if (String.IsNullOrEmpty(publicacaodto.Descricao) &&
+                        String.IsNullOrWhiteSpace(publicacaodto.Descricao))
                     {
                         _logger.LogError("A descrição está inválida");
                         return BadRequest("É Obrigatório a descrição na publicação.");
