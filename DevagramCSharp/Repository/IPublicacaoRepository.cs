@@ -8,5 +8,7 @@ namespace DevagramCSharp.Repository
         public void Publicar(Publicacao publicacao);
 
         List<PublicacaoFeedRespostaDto> GetPublicacaoesFeed(int idUsuario);
+
+        List<PublicacaoFeedRespostaDto> GetPublicacaoesFeedUsuario(int idUsuario);
     }
 }
