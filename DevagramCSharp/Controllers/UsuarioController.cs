@@ -11,7 +11,7 @@ namespace DevagramCSharp.Controllers
     public class UsuarioController : BaseController
     {
         public readonly ILogger<UsuarioController> _logger;
-        public readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
         public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
         {
@@ -25,14 +25,14 @@ namespace DevagramCSharp.Controllers
         {
             try
             {
-                Usuario usuario = new Usuario()
-                {
-                    Email = "daniel@devaria.com.br",
-                    Nome = "Daniel",
-                    Id = 100
-                };
+                Usuario usuario = LerToken();
 
-                return Ok(usuario);
+
+                return Ok(new UsuarioRespostaDto
+                {
+                    Nome = usuario.Nome,
+                    Email = usuario.Email
+                });
 
             }
             catch (Exception ex)

@@ -15,9 +15,10 @@ namespace DevagramCSharp.Controllers
         private readonly ILogger<LoginController> _logger;
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILogger<LoginController> logger, IUsuarioRepository usuarioRepository)
         {
             _logger = logger;
+            _usuarioRepository = usuarioRepository;
         }
 
         [HttpPost]
