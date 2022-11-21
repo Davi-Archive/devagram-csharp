@@ -54,7 +54,6 @@ namespace DevagramCSharp.Controllers
                     _logger.LogError("A requisição de curtir está vazia");
                     return BadRequest("A requisição de curtir está vazia");
                 }
-                return Ok("Curtida EXECUTADA com sucesso!");
             }
             catch (Exception ex)
             {

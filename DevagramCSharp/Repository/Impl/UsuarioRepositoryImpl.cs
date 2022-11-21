@@ -22,6 +22,11 @@ namespace DevagramCSharp.Repository.Impl
             return _context.Usuarios.FirstOrDefault(u => u.Email == email && u.Senha == senha);
         }
 
+        public Usuario GetUsuarioNome(int nome)
+        {
+            throw new NotImplementedException();
+        }
+
         public Usuario GetUsuarioPorId(int id)
         {
             return _context.Usuarios.FirstOrDefault(u => u.Id == id);
@@ -36,6 +41,11 @@ namespace DevagramCSharp.Repository.Impl
         public bool VerificarEmail(string email)
         {
             return _context.Usuarios.Any(u => u.Email == email.ToLower());
+        }
+
+        List<Usuario> IUsuarioRepository.GetUsuarioNome(string nome)
+        {
+            return _context.Usuarios.Where(u => u.Nome.Contains(nome)).ToList();
         }
     }
 }
